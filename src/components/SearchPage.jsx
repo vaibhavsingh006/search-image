@@ -18,15 +18,14 @@ const SearchPage = () => {
             return;
         }
 
-
-        if (query === previousQuery) {
+        if (page === 1 && query === previousQuery) {
             alert("You already searched for this term!");
             return;
         }
 
         setLoading(true);
         try {
-            // Fetch images with pagination
+
             const photos = await fetchImages(query, page, perPage);
 
             if (photos.photos.length === 0) {
@@ -37,8 +36,9 @@ const SearchPage = () => {
                 setCurrentPage(page);
             }
 
-
-            setPreviousQuery(query);
+            if (page === 1) {
+                setPreviousQuery(query);
+            }
         } catch (error) {
             alert("Failed to fetch images. Please try again.");
         } finally {
